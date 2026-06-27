@@ -20,6 +20,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,18 +30,20 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Only go transparent on the home page hero; all other pages always show white bar
+  const transparent = isHome && !isScrolled;
+
   const navClass = `fixed w-full z-40 transition-all duration-300 ${
-    isScrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5"
+    transparent ? "bg-transparent py-5" : "bg-white shadow-md py-3"
   }`;
 
   const linkClass = (href: string) => {
     const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
     const base = "text-sm font-medium uppercase tracking-wider transition-colors duration-200";
-    if (isScrolled) {
-      return `${base} ${isActive ? "text-secondary" : "text-primary hover:text-secondary"}`;
+    if (transparent) {
+      return `${base} ${isActive ? "text-secondary" : "text-white hover:text-secondary"}`;
     }
-    // Transparent mode usually looks better with white text if over image, but we'll adapt.
-    return `${base} ${isActive ? "text-secondary" : "text-primary md:text-white hover:text-secondary"}`;
+    return `${base} ${isActive ? "text-secondary" : "text-primary hover:text-secondary"}`;
   };
 
   return (
@@ -50,7 +53,7 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <span className={`font-serif font-bold text-2xl tracking-widest ${isScrolled ? "text-primary" : "text-primary md:text-white"}`}>
+              <span className={`font-serif font-bold text-2xl tracking-widest ${transparent ? "text-white" : "text-primary"}`}>
                 {hotel.name.toUpperCase()}
               </span>
             </Link>
@@ -63,12 +66,12 @@ export function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className={`px-5 py-2 border text-sm font-medium uppercase tracking-wider transition-all duration-300 ${
-                isScrolled 
-                  ? "border-primary text-primary hover:bg-primary hover:text-white" 
-                  : "border-white text-primary md:text-white hover:bg-white hover:text-primary"
+                transparent
+                  ? "border-white text-white hover:bg-white hover:text-primary"
+                  : "border-primary text-primary hover:bg-primary hover:text-white"
               }`}
             >
               Book Now
@@ -79,7 +82,7 @@ export function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-md ${isScrolled ? "text-primary" : "text-white"}`}
+              className={`p-2 rounded-md ${transparent ? "text-white" : "text-primary"}`}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
