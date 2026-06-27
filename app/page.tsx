@@ -1,65 +1,139 @@
+import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Container } from "@/components/ui/Container";
+import { SectionTitle } from "@/components/ui/SectionTitle";
+import { Button } from "@/components/ui/Button";
+import { RoomCard } from "@/components/ui/RoomCard";
+import { FacilityCard } from "@/components/ui/FacilityCard";
+import { TestimonialCard } from "@/components/ui/TestimonialCard";
+import { MapSection } from "@/components/MapSection";
+import { hotel } from "@/data/hotel";
+import { rooms } from "@/data/rooms";
+import { facilities } from "@/data/facilities";
+import { gallery } from "@/data/gallery";
+import { testimonials } from "@/data/testimonials";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      {/* Hero Section */}
+      <section className="relative h-screen min-h-[600px] flex items-center justify-center">
+        <div className="absolute inset-0">
+          <Image
+            src={gallery[0].url} // Using the exterior image
+            alt={hotel.name}
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto mt-16">
+          <h1 className="text-5xl md:text-7xl font-serif text-white font-bold mb-6 tracking-wide fade-in-up">
+            {hotel.name}
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xl md:text-2xl text-gray-200 mb-10 font-light tracking-wide fade-in-up delay-100">
+            {hotel.tagline}
           </p>
+          <div className="fade-in-up delay-200">
+            <Button href="/contact" variant="secondary" className="text-lg px-8 py-4">
+              Book Your Stay
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+
+      {/* About Preview */}
+      <section className="py-24 bg-transparent">
+        <Container>
+          <div className="flex flex-col md:flex-row items-center gap-16">
+            <div className="md:w-1/2">
+              <SectionTitle title="Welcome to Paradise" subtitle="About Us" />
+              <p className="text-gray-600 mb-6 leading-relaxed text-lg">
+                {hotel.description}
+              </p>
+              <Button href="/about" variant="outline">
+                Read More About Us
+              </Button>
+            </div>
+            <div className="md:w-1/2 relative h-[500px] w-full rounded-lg overflow-hidden shadow-2xl">
+              <Image
+                src={gallery.find(g => g.category === "Hotel")?.url || gallery[1].url}
+                alt="Hotel Pool"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Featured Rooms */}
+      <section className="py-24 bg-accent">
+        <Container>
+          <div className="flex justify-between items-end mb-12">
+            <SectionTitle title="Our Luxurious Rooms" subtitle="Accommodation" />
+            <Link href="/rooms" className="hidden md:inline-flex items-center text-primary font-medium hover:text-secondary transition-colors mb-12">
+              View All Rooms &rarr;
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {rooms.map((room) => (
+              <RoomCard key={room.id} room={room} />
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center md:hidden">
+            <Button href="/rooms" variant="outline">View All Rooms</Button>
+          </div>
+        </Container>
+      </section>
+
+      {/* Facilities Preview */}
+      <section className="py-24 bg-transparent">
+        <Container>
+          <SectionTitle title="World-Class Amenities" subtitle="Facilities" centered />
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {facilities.slice(0, 8).map((facility) => (
+              <FacilityCard key={facility.id} facility={facility} />
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center">
+            <Button href="/facilities" variant="outline">Explore All Facilities</Button>
+          </div>
+        </Container>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-24 bg-primary text-white">
+        <Container>
+          <div className="text-center mb-16">
+            <span className="text-secondary font-semibold uppercase tracking-wider text-sm mb-2 block">
+              Guest Reviews
+            </span>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold">
+              What Our Guests Say
+            </h2>
+            <div className="h-1 w-20 bg-secondary mx-auto mt-4"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-800">
+            {testimonials.map((testimonial) => (
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Map Section */}
+      <section>
+        <MapSection />
+      </section>
+    </>
   );
 }
