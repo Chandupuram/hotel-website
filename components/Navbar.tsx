@@ -34,7 +34,7 @@ export function Navbar() {
   const transparent = isHome && !isScrolled;
 
   const navClass = `fixed w-full z-40 transition-all duration-300 ${
-    transparent ? "bg-transparent py-5" : "bg-white shadow-md py-3"
+    transparent ? "bg-white shadow-md py-3 md:bg-transparent md:shadow-none md:py-5" : "bg-white shadow-md py-3"
   }`;
 
   const linkClass = (href: string) => {
@@ -53,7 +53,7 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <span className={`font-serif font-bold text-2xl tracking-widest ${transparent ? "text-white" : "text-primary"}`}>
+              <span className={`font-serif font-bold text-2xl tracking-widest ${transparent ? "text-primary md:text-white" : "text-primary"}`}>
                 {hotel.name.toUpperCase()}
               </span>
             </Link>
@@ -82,7 +82,7 @@ export function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-md ${transparent ? "text-white" : "text-primary"}`}
+              className="p-2 rounded-md text-primary"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
