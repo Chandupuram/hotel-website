@@ -53,7 +53,7 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <span className={`font-serif font-bold text-2xl tracking-widest ${transparent ? "text-primary md:text-white" : "text-primary"}`}>
+              <span className={`hidden md:inline font-serif font-bold text-2xl tracking-widest ${transparent ? "text-primary md:text-white" : "text-primary"}`}>
                 {hotel.name.toUpperCase()}
               </span>
             </Link>
