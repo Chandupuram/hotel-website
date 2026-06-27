@@ -79,7 +79,7 @@ export function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-md ${isScrolled ? "text-primary" : "text-primary"}`}
+              className={`p-2 rounded-md ${isScrolled ? "text-primary" : "text-white"}`}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
