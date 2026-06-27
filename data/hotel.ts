@@ -17,9 +17,10 @@ export const hotel = {
   ],
   contact: {
     address: "Srinivasa Sathravam, Kothapatnam, Andhra Pradesh - 524412",
-    phone: "+91 9898987899",
-    email: "vclctrip@gmail.com",
-    whatsapp: "9898987899" // Number with country code, no +, no spaces
+    phone: "+91 9876452310",
+    email: "grand-horizon@yopmail.com",
+    whatsapp: "9999999999", // Number with country code, no +, no spaces,
+    emailKey: "22b857b6a55b7eb84e936b78dffacad8"
   },
   socials: {
     facebook: "#",

@@ -8,7 +8,7 @@ export function ContactForm() {
 
   // We will use FormSubmit to handle the form without a backend.
   // It uses the email specified in data/hotel.ts as the receiving email.
-  const formActionUrl = `https://formsubmit.co/${hotel.contact.email}`;
+  const formActionUrl = `https://formsubmit.co/${hotel.contact.emailKey}`;
 
   return (
     <div className="bg-white p-8 shadow-lg">
